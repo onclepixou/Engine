@@ -723,7 +723,7 @@ int main(int argc, char** argv){
     Bounds3f b1 = Bounds3f(p1, p2);
     std::cout << b1.maximumExtent() << std::endl;
 
-
+    std::cout<<"hello"<<std::endl;
     //std::cout << p2 << std::endl;
 
     return EXIT_SUCCESS;
