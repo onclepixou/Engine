@@ -134,6 +134,9 @@ template <typename T> class Point3{
         Point3<T>& operator-=(const Vector3<T>& v){x -= v.x; y -= v.y; z -= v.z; return (*this);}
         Point3<T> operator*(const T& s) const {return Point3<T>( s * x, s * y, s * z);};
         Point3<T>& operator*=(const T& s){ x = s * x; y = s * y; z = s * z; return *this;};
+        bool operator==(const Point3<T>& p){return ((x == p.x) && ( y == p.y ) && (z == p.z));}
+        bool operator!=(const Point3<T>& p){return ((x != p.x) || ( y != p.y ) || (z != p.z));}
+
         T  operator[](int i)const;
         T& operator[](int i);
 
@@ -162,6 +165,8 @@ template <typename T> class Point2{
         Point2<T>& operator-=(const Vector2<T>& v){x -= v.x; y -= v.y; return (*this);};
         Point2<T> operator*(const T& s) const {return Point2<T>( s * x, s * y);};
         Point2<T>& operator*=(const T& s){ x = s * x; y = s * y; return *this;};
+        bool operator==(const Point3<T>& p){return ((x == p.x) && ( y == p.y ));}
+        bool operator!=(const Point3<T>& p){return ((x != p.x) || ( y != p.y ));}
         T  operator[](int i)const;
         T& operator[](int i);
 
@@ -239,7 +244,35 @@ template <typename T> class Bounds2{
     public: 
         Point2<T> pMin;
         Point2<T> pMax;
+
+        Bounds2(){
+            T minNum = std::numeric_limits<T>::lowest();
+            T maxNum = std::numeric_limits<T>::max();
+            pMin = Point2<T>(maxNum, maxNum);
+            pMax = Point2<T>(minNum, minNum);
+        }
+
+        Bounds2(const Point2<T>& p) : pMin(p), pMax(p){};
+        
+        Bounds2(const Point2<T>& p1, const Point2<T>& p2)
+         : pMin(std::min(p1.x, p2.x), std::min(p1.y, p2.y)),
+           pMax(std::max(p1.x, p2.x), std::max(p1.y, p2.y)){};
+
+        Point2<T> corner(int i) const;
+        Vector2<T> diagonal() const;
+        T surfaceArea()const;
+        int maximumExtent()const;
+        Point2<T> lerp(const Point2<Float>& t) const;
+        Vector2<T> offset(const Point2<T>& p) const;
+        void boundingCircle(Point2<T>* center, Float* radius)const;
+
+        const Point2<T>& operator[](int i)const;
+        Point2<T>& operator[](int i);
+        bool operator==(const Bounds2<T>& b){return (( pMin == b.pMin ) && ( pMax == b.pMax));}
+        bool operator!=(const Bounds2<T>& b){return (( pMin != b.pMin ) || ( pMax != b.pMax));}
 };
+
+
 
 template <typename T> class Bounds3{
 
@@ -253,7 +286,9 @@ template <typename T> class Bounds3{
             pMin = Point3<T>(maxNum, maxNum, maxNum);
             pMax = Point3<T>(minNum, minNum, minNum);
         }
+
         Bounds3(const Point3<T>& p) : pMin(p), pMax(p){};
+
         Bounds3(const Point3<T>& p1, const Point3<T>& p2)
          : pMin(std::min(p1.x, p2.x), std::min(p1.y, p2.y), std::min(p1.z, p2.z)),
            pMax(std::max(p1.x, p2.x), std::max(p1.y, p2.y), std::max(p1.z, p2.z)){};
@@ -270,8 +305,43 @@ template <typename T> class Bounds3{
 
         const Point3<T>& operator[](int i)const;
         Point3<T>& operator[](int i);
+        bool operator==(const Bounds3<T>& b){return (( pMin == b.pMin ) && ( pMax == b.pMax));}
+        bool operator!=(const Bounds3<T>& b){return (( pMin != b.pMin ) || ( pMax != b.pMax));}
+
+};
 
 
+class boundIterator : public std::forward_iterator_tag{
+
+    public:
+        boundIterator(const Bounds2i& b, const Point2i& p) : b(&b), pt(p){};
+
+        boundIterator operator++(){
+            advance();
+            return *this;
+        }
+
+        boundIterator operator++(int){
+            boundIterator old = *this;
+            advance();
+            return old;
+        }
+
+        bool operator==(const boundIterator& bi){
+            return ((pt == bi.pt) && (b == bi.b));
+        }
+
+        bool operator!=(const boundIterator& bi){
+            return ((pt != bi.pt) || (b != bi.b));
+        }
+
+        Point2i operator*() const { return pt; }
+
+    private:
+        void advance();
+
+        const Bounds2i* b;
+        Point2i pt;
 };
 
 
