@@ -72,8 +72,8 @@ template <typename T> class Vector3{
         bool hasNan()const;
         std::string tostring();
         Vector3<T> abs();
-        Float lenghtSquared()const;
-        Float lenght()const;
+        Float lengthSquared()const;
+        Float length()const;
         bool isNormalized();
 
 };
@@ -88,6 +88,10 @@ template <typename T> class Vector3{
     inline T Dot(const Vector3<T>& a, const Vector3<T>& b){return a.x * b.x + a.y * b.y + a.z * b.z;}
 
     template <typename T>
+    inline Vector3<T> Abs(const Vector3<T>& a){return Vector3<T>(std::abs(a.x), std::abs(a.y), std::abs(a.z));}
+
+
+    template <typename T>
     inline T AbsDot(const Vector3<T>& a, const Vector3<T>& b){return std::abs(dot(a, b));}
 
     template <typename T>
@@ -99,7 +103,7 @@ template <typename T> class Vector3{
     }
 
     template <typename T>
-    inline Vector3<T> Normalize(const Vector3<T>& v){return (v/v.lenght());}
+    inline Vector3<T> Normalize(const Vector3<T>& v){return (v/v.length());}
 
     template <typename T> 
     inline T MinComponent(const Vector3<T>& v){
@@ -191,8 +195,8 @@ template <typename T> class Vector2{
         bool hasNan() const;
         std::string tostring();
         Vector2<T> abs();
-        Float lenghtSquared()const;
-        Float lenght()const;
+        Float lengthSquared()const;
+        Float length()const;
         bool isNormalized()const;
 
 
@@ -208,6 +212,9 @@ template <typename T> class Vector2{
     inline T Dot(const Vector2<T>& a, const Vector2<T>& b){return a.x * b.x + a.y * b.y;}
 
     template <typename T>
+    inline Vector2<T> Abs(const Vector2<T>& a){return Vector2<T>(std::abs(a.x), std::abs(a.y));}
+
+    template <typename T>
     inline T AbsDot(const Vector2<T>& a, const Vector2<T>& b){return std::abs(dot(a, b));}
 
     template <typename T>
@@ -219,7 +226,7 @@ template <typename T> class Vector2{
     }
 
     template <typename T>
-    inline Vector2<T> Normalize(const Vector2<T>& v){return (v/v.lenght());}
+    inline Vector2<T> Normalize(const Vector2<T>& v){return (v/v.length());}
 
     template <typename T> 
     inline T MinComponent(const Vector2<T>& v){
@@ -308,12 +315,12 @@ template <typename T> class Point3{
 
     template <typename T>
     inline Float Distance(const Point3<T>& p1, const Point3<T>& p2){
-        return (p1 - p2).lenght();
+        return (p1 - p2).length();
     }
 
     template <typename T>
     inline Float DistanceSquared(const Point3<T>& p1, const Point3<T>& p2){
-        return (p1 - p2).lenghtSquared();
+        return (p1 - p2).lengthSquared();
     }
 
     template <typename T>
@@ -358,6 +365,12 @@ template <typename T> class Point3{
 
     template <typename T>
     inline std::ostream& operator<<(std::ostream& os, Point3<T>& p){
+        os << p.tostring();
+        return os;
+    }
+
+    template <typename T>
+    inline std::ostream& operator<<(std::ostream& os, Point3<T> p){
         os << p.tostring();
         return os;
     }
@@ -406,12 +419,12 @@ template <typename T> class Point2{
 // Point2 related function
     template <typename T>
     inline Float Distance(const Point2<T>& p1, const Point2<T>& p2){
-        return (p1 - p2).lenght();
+        return (p1 - p2).length();
     }
 
     template <typename T>
     inline Float DistanceSquared(const Point2<T>& p1, const Point2<T>& p2){
-        return (p1 - p2).lenghtSquared();
+        return (p1 - p2).lengthSquared();
     }
 
     template <typename T>
@@ -459,6 +472,12 @@ template <typename T> class Point2{
         os << p.tostring();
         return os;
     }
+
+    template <typename T>
+    inline std::ostream& operator<<(std::ostream& os, Point2<T> p){
+        os << p.tostring();
+        return os;
+    }
 //------------------------------------------------------------------------------------//
 
 
@@ -497,8 +516,8 @@ template <typename T> class Normal3{
         bool hasNan()const;       
         std::string tostring();
         Normal3<T> abs();
-        Float lenghtSquared()const;
-        Float lenght()const;
+        Float lengthSquared()const;
+        Float length()const;
         bool isNormalized();
 
 };
@@ -512,7 +531,7 @@ template <typename T> class Normal3{
 
 
     template <typename T>
-    inline Normal3<T> Normalize(const Normal3<T>& v){return (v/v.lenght());}
+    inline Normal3<T> Normalize(const Normal3<T>& v){return (v/v.length());}
 
     template <typename T>
     inline T Dot(const Normal3<T>& a, const Normal3<T>& b){return a.x * b.x + a.y * b.y + a.z * b.z;}
@@ -570,6 +589,12 @@ template <typename T> class Normal3{
 
     template <typename T>
     inline std::ostream& operator<<(std::ostream& os, Normal3<T>& v){
+        os << v.tostring();
+        return os;
+    }
+
+    template <typename T>
+    inline std::ostream& operator<<(std::ostream& os, Normal3<T> v){
         os << v.tostring();
         return os;
     }

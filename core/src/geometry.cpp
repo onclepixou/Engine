@@ -24,7 +24,6 @@
     }
 
 
-
     // Vector2 class operator overload //
 
     template <class T> 
@@ -140,18 +139,18 @@
     }
 
     template <class T>
-    Float Vector2<T>::lenghtSquared()const{
+    Float Vector2<T>::lengthSquared()const{
         return x * x + y * y;
     }
 
     template <class T>
-    Float Vector2<T>::lenght()const{
-        return std::sqrt(lenghtSquared());
+    Float Vector2<T>::length()const{
+        return std::sqrt(lengthSquared());
     }
 
     template <class T>
     bool Vector2<T>::isNormalized()const{
-        return ((lenght() - 1 ) <= 1e-6);
+        return ((length() - 1 ) <= 1e-6);
     }
 
 //----------------------------------------------//
@@ -290,18 +289,18 @@
     }
 
     template <typename T>
-    Float Vector3<T>::lenghtSquared()const{
+    Float Vector3<T>::lengthSquared()const{
         return x * x + y * y + z * z;
     }
 
     template <typename T>
-    Float Vector3<T>::lenght()const{
-        return std::sqrt(lenghtSquared());
+    Float Vector3<T>::length()const{
+        return std::sqrt(lengthSquared());
     }
 
     template <typename T>
     bool Vector3<T>::isNormalized(){
-        return ((lenght() - 1 ) <= 1e-6);
+        return ((length() - 1 ) <= 1e-6);
     }
 //----------------------------------------------//
 
@@ -743,18 +742,18 @@
     }
 
     template <class T>
-    Float Normal3<T>::lenghtSquared()const{
+    Float Normal3<T>::lengthSquared()const{
         return x * x + y * y + z * z;
     }
 
     template <class T>
-    Float Normal3<T>::lenght()const{
-        return std::sqrt(lenghtSquared());
+    Float Normal3<T>::length()const{
+        return std::sqrt(lengthSquared());
     }
 
     template <class T>
     bool Normal3<T>::isNormalized(){
-        return ((lenght() - 1 ) <= 1e-6);
+        return ((length() - 1 ) <= 1e-6);
     }
 
 
@@ -920,9 +919,9 @@
 
         template <typename T> 
         Bounds2<T> Intersect(const Bounds2<T>& b1, const Bounds2<T>& b2){
-            return Bounds3<T>(Point3<T>(std::max(b1.pMin.x, b2.pMin.x), 
+            return Bounds2<T>(Point2<T>(std::max(b1.pMin.x, b2.pMin.x), 
                                         std::max(b1.pMin.y, b2.pMin.y)),
-                              Point3<T>(std::min(b1.pMax.x, b2.pMax.x),
+                              Point2<T>(std::min(b1.pMax.x, b2.pMax.x),
                                         std::min(b1.pMax.y, b2.pMax.y)));  
         }
 
@@ -1179,6 +1178,34 @@ template class Bounds3<int>;
 template class Bounds3<Float>;
 template class Bounds2<int>;
 template class Bounds2<Float>;
+
+
+template Bounds3<Float> Union(const Bounds3<Float>& b, const Point3<Float>& p);
+template Bounds3<int> Union(const Bounds3<int>& b, const Point3<int>& p);
+template Bounds3<Float> Union(const Bounds3<Float>& b1, const Bounds3<Float>& b2);
+template Bounds3<int> Union(const Bounds3<int>& b1, const Bounds3<int>& b2);
+template Bounds3<Float> Intersect(const Bounds3<Float>& b1, const Bounds3<Float>& b2);
+template Bounds3<int> Intersect(const Bounds3<int>& b1, const Bounds3<int>& b2);
+template bool Overlaps(const Bounds3<Float>& b1, const Bounds3<Float>& b2);
+template bool Overlaps(const Bounds3<int>& b1, const Bounds3<int>& b2);
+template bool Inside(const Point3<Float>& p, const Bounds3<Float>& b);
+template bool Inside(const Point3<int>& p, const Bounds3<int>& b);
+template bool InsideExclusive(const Point3<Float>& p, const Bounds3<Float>& b);
+template bool InsideExclusive(const Point3<int>& p, const Bounds3<int>& b);
+
+template Bounds2<Float> Union(const Bounds2<Float>& b, const Point2<Float>& p);
+template Bounds2<int> Union(const Bounds2<int>& b, const Point2<int>& p);
+template Bounds2<Float> Union(const Bounds2<Float>& b1, const Bounds2<Float>& b2);
+template Bounds2<int> Union(const Bounds2<int>& b1, const Bounds2<int>& b2);
+template Bounds2<Float> Intersect(const Bounds2<Float>& b1, const Bounds2<Float>& b2);
+template Bounds2<int> Intersect(const Bounds2<int>& b1, const Bounds2<int>& b2);
+template bool Overlaps(const Bounds2<Float>& b1, const Bounds2<Float>& b2);
+template bool Overlaps(const Bounds2<int>& b1, const Bounds2<int>& b2);
+template bool Inside(const Point2<Float>& p, const Bounds2<Float>& b);
+template bool Inside(const Point2<int>& p, const Bounds2<int>& b);
+template bool InsideExclusive(const Point2<Float>& p, const Bounds2<Float>& b);
+template bool InsideExclusive(const Point2<int>& p, const Bounds2<int>& b);
+
 
 
 
