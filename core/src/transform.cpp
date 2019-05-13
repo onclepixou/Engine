@@ -495,10 +495,10 @@
             cameraToWorld.m[2][1] = newUp.z;
             cameraToWorld.m[3][1] = 0;
 
-            cameraToWorld.m[0][3] = dir.x;
-            cameraToWorld.m[1][3] = dir.y;
-            cameraToWorld.m[2][3] = dir.z;
-            cameraToWorld.m[3][3] = 0;
+            cameraToWorld.m[0][2] = dir.x;
+            cameraToWorld.m[1][2] = dir.y;
+            cameraToWorld.m[2][2] = dir.z;
+            cameraToWorld.m[3][2] = 0;
 
 
             return Transform(Inverse(cameraToWorld), cameraToWorld);
